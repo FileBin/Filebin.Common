@@ -23,8 +23,7 @@ internal sealed class ExceptionHandler(IProblemDetailsService problemDetailsServ
 
     private static int GetStatusCode(Exception exception) =>
         exception switch {
-            BadRequestException => StatusCodes.Status400BadRequest,
-            NotFoundException => StatusCodes.Status404NotFound,
+            WebException ex => ex.statusCode,
             ValidationException => StatusCodes.Status422UnprocessableEntity,
             _ => StatusCodes.Status500InternalServerError
         };

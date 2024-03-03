@@ -1,6 +1,7 @@
 namespace Filebin.Common.Validation;
 
 public static class ValidationExtensions {
+
     public static IRuleBuilderOptions<T, string> PasswordValidation<T>(this IRuleBuilder<T, string> ruleBuilder) {
         return ruleBuilder.NotEmpty().Length(8, 256);
     }
@@ -31,5 +32,13 @@ public static class ValidationExtensions {
 
     public static IRuleBuilderOptions<T, string> SearchStringValidation<T>(this IRuleBuilder<T, string> ruleBuilder) {
         return ruleBuilder.MaximumLength(256);
+    }
+
+    public static IRuleBuilderOptions<T, string> ImageContentValidation<T>(this IRuleBuilder<T, string> ruleBuilder) {
+        return ruleBuilder.NotEmpty().Matches("^image\\/(gif|jpeg|pjpeg|png|svg\\+xml|tiff|webp)$");
+    }
+
+    public static IRuleBuilderOptions<T, string> GuidValidation<T>(this IRuleBuilder<T, string> ruleBuilder) {
+        return ruleBuilder.NotEmpty().Must(x => Guid.TryParse(x, out _));
     }
 }

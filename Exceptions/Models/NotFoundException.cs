@@ -1,7 +1,12 @@
+
+using Microsoft.AspNetCore.Http;
+
 namespace Filebin.Common.Util.Exceptions;
 
 public class NotFoundException : WebException {
     private static readonly string title = "NotFound";
+
+    public override int statusCode => StatusCodes.Status404NotFound;
 
     public static NotFoundException ParameterNotFound(string name) => new NotFoundException($"parameter {name} not found");
 
